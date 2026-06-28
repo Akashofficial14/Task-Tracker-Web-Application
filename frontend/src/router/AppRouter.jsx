@@ -1,10 +1,12 @@
 import React, { Profiler } from "react";
 import { createBrowserRouter } from "react-router";
 import { RouterProvider } from "react-router/dom";
-import AuthLayout from "../layout/AuthLayout";
+import Dashboard from "../layout/Dashboard"
 import Homelayout from "../layout/Homelayout";
 import ProtectedRoute from "../components/ProtectedRoute";
 import PublicRoute from "../components/PublicRoute";
+import TaskLayout from "../layout/Dashboard";
+import AuthLayout from '../layout/AuthLayout'
 const AppRouter = () => {
   const router = createBrowserRouter([
     {
@@ -18,13 +20,17 @@ const AppRouter = () => {
       ],
     },
     {
-      path: "/profile",
+      path: "/task",
       element: <ProtectedRoute />,
       children: [
         {
           index: true,
-          element: <Homelayout />,
+          element: <Dashboard/>,
         },
+        {
+          path:"/task/profile",
+          element:<Homelayout/>
+        }
     ]
     },
   ]);

@@ -23,7 +23,7 @@ const Login = ({ setToggle }) => {
         );
         toast.success("Login Successful!");
         reset();
-        navigate("/profile");
+        navigate("/task");
       }
     } catch (err) {
       toast.error(err.response?.data?.message || "Login failed");

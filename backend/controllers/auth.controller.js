@@ -18,16 +18,16 @@ const registerController = async (req, res) => {
             message: "Something went wrong"
         })
         let token = newUser.generateToken()
-        //verify email
-        const mailUrl = `https://authtask-1.onrender.com/api/auth/verify-email/${token}`
-        await sendMail(email, "Verification Email ",
-            `<h3>click on the below link to login to your account</h3>
-             ${mailUrl}
-            `
-        )
+        // //verify email
+        // const mailUrl = `https://authtask-1.onrender.com/api/auth/verify-email/${token}`
+        // await sendMail(email, "Verification Email ",
+        //     `<h3>click on the below link to login to your account</h3>
+        //      ${mailUrl}
+        //     `
+        // )
         return res.status(201).json({
             success: true,
-            message: "email verification link sent to your account",
+            message: "user registered successfully",
             newUser,
         })
     } catch (error) {
@@ -40,34 +40,34 @@ const registerController = async (req, res) => {
 
 }
 
-const verifyEmailController = async (req, res) => {
-    try {
-        let token = req.params.token
-        if (!token) return res.status(401).json({
-            message: "token not found"
-        })
-        let decode = jwt.verify(token, process.env.JWT_TOKEN)
-        if (!decode) return res.status(401).json({
-            message: "invalid token"
-        })
-        //aapko isverified ko true krna hai ab to decode se aap user nikal lo id ka use karke or isverified ko true krdo then open login step
-        let updatedUser = await userModel.findByIdAndUpdate(
-            decode.id,
-            { isVerified: true },
-            { new: true } // Isse updated user return hoga
-        );
-        // console.log("new user is -->", updatedUser)
-        //isse mongo me change ho jayegaa or isverified true ho jayega
-        return res.render("verifyEmail")
-    } catch (error) {
-        console.log("error", error)
-        return res.status(500).json({
-            message: "Internal server error",
-            success: false,
-            error
-        })
-    }
-}
+// const verifyEmailController = async (req, res) => {
+//     try {
+//         let token = req.params.token
+//         if (!token) return res.status(401).json({
+//             message: "token not found"
+//         })
+//         let decode = jwt.verify(token, process.env.JWT_TOKEN)
+//         if (!decode) return res.status(401).json({
+//             message: "invalid token"
+//         })
+//         //aapko isverified ko true krna hai ab to decode se aap user nikal lo id ka use karke or isverified ko true krdo then open login step
+//         let updatedUser = await userModel.findByIdAndUpdate(
+//             decode.id,
+//             { isVerified: true },
+//             { new: true } // Isse updated user return hoga
+//         );
+//         // console.log("new user is -->", updatedUser)
+//         //isse mongo me change ho jayegaa or isverified true ho jayega
+//         return res.render("verifyEmail")
+//     } catch (error) {
+//         console.log("error", error)
+//         return res.status(500).json({
+//             message: "Internal server error",
+//             success: false,
+//             error
+//         })
+//     }
+// }
 
 const loginController = async (req, res) => {
     try {
@@ -79,10 +79,6 @@ const loginController = async (req, res) => {
         let existedUser = await userModel.findOne({ email })
         if (!existedUser) return res.status(401).json({
             message: "user does not exists"
-        })
-
-        if (!existedUser.isVerified) return res.status(401).json({
-            message: "verify first from your email"
         })
         // bcrypt.compare ek asynchronous function hai jo Promise return karta hai. Agar aap await nahi lagayenge, toh checkPass hamesha
         //  ek "Pending Promise" rahega. JavaScript mein ek Promise object hamesha truthy mana jata hai, isliye aapki if (!checkPass) wali 
@@ -135,4 +131,4 @@ const logoutController = async (req, res) => {
         })
     }
 }
-module.exports = { registerController, loginController, logoutController, verifyEmailController }
+module.exports = { registerController, loginController, logoutController}
