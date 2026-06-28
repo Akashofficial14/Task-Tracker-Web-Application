@@ -1,52 +1,68 @@
-# 🚀 Modern MERN Stack Auth & Profile System
 
-A high-performance, full-stack application featuring a secure authentication ecosystem and a comprehensive user dashboard. This project implements a complete **CRUD workflow** for user profiles, secure account management, and a premium UI/UX experience using the latest tech industry standards.
+# 🚀 Modern MERN Task & Profile Management System
+
+A high-performance, full-stack application featuring **secure authentication**, **profile management**, and a dynamic **Kanban-style task dashboard**. This project implements complete **CRUD workflows** for tasks and user profiles while delivering a premium UI/UX experience using modern MERN technologies.
 
 ---
 
 ## ✨ Core Features
 
-### 🔐 Advanced Authentication
-- **Secure Signup & Login** — Validation-heavy registration flow with unique email/mobile checks.
-- **JWT & Cookie Security** — Session management using JSON Web Tokens with `cookie-parser` for enhanced security.
-- **Password Protection** — Industry-standard hashing using `bcrypt` (10 salt rounds).
-- **Email Services** — Integrated `nodemailer` with `EJS` templates for automated welcome and verification emails.
-- **Protected Routing** — Robust frontend access control using `react-router`.
+### 📋 Intelligent Task Management
 
-### 👤 Profile Management (Full CRUD)
-- **Real-time Data Sync** — Instant profile data fetching and caching with `@tanstack/react-query`.
-- **Profile Customization** — Users can update their Full Name, City, and Mobile Number seamlessly.
-- **Security Hub** — A dedicated interface to change passwords, requiring current password verification to prevent unauthorized changes.
-- **Optimized Forms** — Zero-latency form handling with `react-hook-form`.
+* **Kanban Workflow** — Organize tasks across **Pending**, **In Progress**, and **Completed** columns.
+* **Complete CRUD Operations** — Create, Read, Update, and Delete tasks effortlessly.
+* **Real-time Updates** — Instant UI synchronization powered by TanStack Query without page refreshes.
+* **Optimized Forms** — Robust task creation and editing with `react-hook-form`.
+* **RESTful API** — Scalable Express backend integrated with MongoDB.
+
+### 🔐 Advanced Authentication
+
+* **Secure Signup & Login** — Validation-heavy authentication with protected sessions.
+* **JWT & Cookie Security** — Session management using JSON Web Tokens and `cookie-parser`.
+* **Password Protection** — Passwords securely hashed using `bcrypt` (10 salt rounds).
+* **Email Services** — Automated welcome and verification emails powered by `nodemailer` and `EJS`.
+* **Protected Routing** — Authenticated access to dashboard, tasks, and profile management.
+
+### 👤 Profile Management (CRUD)
+
+* **Real-time Data Sync** — Instant profile fetching and caching using `@tanstack/react-query`.
+* **Profile Customization** — Update Full Name, City, Mobile Number, and other personal details.
+* **Password Security** — Change password securely with current password verification.
+* **Optimized Forms** — Smooth form handling using `react-hook-form`.
 
 ### 🎨 Premium UI/UX Design
-- **Pinterest-Style Layout** — A beautiful, split-screen branding/auth interface.
-- **Zero-Scroll Experience** — A modern, fixed-viewport design that eliminates vertical scrolling for a native app feel.
-- **Glassmorphism** — High-end UI elements featuring backdrop blurs, soft shadows, and vibrant gradients.
-- **Responsive Design** — Fully optimized for Mobile, Tablet, and Desktop using **Tailwind CSS 4.0**.
+
+* **Modern Kanban Dashboard** — Responsive three-column task management interface.
+* **Glassmorphism UI** — Beautiful backdrop blurs, soft shadows, and vibrant gradients.
+* **Zero-Scroll Experience** — Fixed viewport layout that feels like a native application.
+* **Responsive Design** — Optimized for Mobile, Tablet, and Desktop with **Tailwind CSS 4**.
+* **Instant Performance** — Fast data fetching and caching with TanStack Query.
 
 ---
 
 ## 🛠️ Tech Stack
 
 ### Frontend
-| Technology | Details |
-|---|---|
-| **Framework** | React 19 (Vite) |
-| **Styling** | Tailwind CSS 4.0 (`@tailwindcss/vite`) |
-| **State Management** | TanStack Query v5 (React Query) |
-| **Routing** | React Router 7 |
-| **Icons** | Lucide React |
-| **Notifications** | React Toastify |
+
+| Technology           | Details                              |
+| -------------------- | ------------------------------------ |
+| **Framework**        | React 19 (Vite)                      |
+| **Styling**          | Tailwind CSS 4 (`@tailwindcss/vite`) |
+| **State Management** | TanStack Query v5                    |
+| **Routing**          | React Router 7                       |
+| **Forms**            | React Hook Form                      |
+| **Icons**            | Lucide React                         |
+| **Notifications**    | React Toastify                       |
 
 ### Backend
-| Technology | Details |
-|---|---|
-| **Server** | Express 5.0 |
-| **Database** | MongoDB & Mongoose |
-| **Security** | JWT, Bcrypt, Cookie-Parser |
-| **Email** | Nodemailer & EJS |
-| **Development** | Nodemon, Dotenv, CORS |
+
+| Technology      | Details                    |
+| --------------- | -------------------------- |
+| **Server**      | Express 5                  |
+| **Database**    | MongoDB & Mongoose         |
+| **Security**    | JWT, Bcrypt, Cookie-Parser |
+| **Email**       | Nodemailer & EJS           |
+| **Development** | Nodemon, Dotenv, CORS      |
 
 ---
 
@@ -55,17 +71,18 @@ A high-performance, full-stack application featuring a secure authentication eco
 ```plaintext
 ├── frontend/                  # React application (Vite)
 │   ├── src/
-│   │   ├── apis/              # Axios instance & TanStack Query hooks
-│   │   ├── components/        # Reusable UI (Display, EditProfile, UpdatePass)
-│   │   ├── layouts/           # AuthLayout & HomeLayout
+│   │   ├── apis/              # Axios services & TanStack Query hooks
+│   │   ├── components/        # Reusable UI Components
+│   │   ├── layouts/           # Dashboard & Profile Layouts
+│   │   ├── pages/             # Authentication & Dashboard Pages
 │   │   └── App.jsx            # Routing & Providers
 │
 ├── backend/                   # Express server
-│   ├── models/                # Mongoose schemas (User Model)
-│   ├── routes/                # Auth & User API endpoints
+│   ├── models/                # User & Task Schemas
+│   ├── routes/                # Auth, Profile & Task APIs
 │   ├── middleware/            # JWT Auth & Error Handling
-│   ├── utils/                 # Email helpers & Token generators
-│   └── index.js               # Entry point
+│   ├── utils/                 # Email & Helper Functions
+│   └── index.js               # Entry Point
 ```
 
 ---
@@ -81,11 +98,17 @@ cd backend
 npm install
 ```
 
-Create a `.env` file inside the `/backend` folder and configure the following variables:
+Create a `.env` file inside the `/backend` folder:
 
 ```env
 PORT=3000
-JWT_TOKEN=your_token_for_login_
+MONGO_URI=your_mongodb_connection
+JWT_SECRET=your_secret_key
+
+EMAIL_USER=your_email
+EMAIL_PASS=your_password
+
+CLIENT_URL=http://localhost:5173
 ```
 
 Start the backend server:
@@ -93,6 +116,8 @@ Start the backend server:
 ```bash
 npm run dev
 ```
+
+---
 
 ### 2. Frontend Setup
 
@@ -113,24 +138,57 @@ npm run dev
 
 ## 📡 API Reference
 
-### 🔐 Authentication Endpoints
+### 🔐 Authentication
 
-| Action | Method | Endpoint | Description |
-|---|---|---|---|
-| Register | `POST` | `/api/auth/register` | Create a new user account |
-| Login | `POST` | `/api/auth/login` | Authenticate user and return token |
+| Action   | Method | Endpoint             |
+| -------- | ------ | -------------------- |
+| Register | `POST` | `/api/auth/register` |
+| Login    | `POST` | `/api/auth/login`    |
 
-### 👤 User Endpoints *(Protected — requires valid JWT)*
+---
 
-| Action | Method | Endpoint | Description |
-|---|---|---|---|
-| Get Profile | `GET` | `/api/profile` | Fetch logged-in user details |
-| Update Profile | `PUT` | `/api/profile/update` | Update user information |
-| Change Password | `PUT` | `/api/profile/change-password` | Securely update account password |
+### 📋 Task Management
+
+| Action             | Method   | Endpoint                       |
+| ------------------ | -------- | ------------------------------ |
+| Get All Tasks      | `GET`    | `/api/tasks/all`               |
+| Create Task        | `POST`   | `/api/tasks/create`            |
+| Update Task Status | `PUT`    | `/api/tasks/update-status/:id` |
+| Delete Task        | `DELETE` | `/api/tasks/delete/:id`        |
+
+---
+
+### 👤 Profile Management
+
+| Action          | Method | Endpoint                       |
+| --------------- | ------ | ------------------------------ |
+| Get Profile     | `GET`  | `/api/profile`                 |
+| Update Profile  | `PUT`  | `/api/profile/update`          |
+| Change Password | `PUT`  | `/api/profile/change-password` |
+
+---
+
+## 🚀 Highlights
+
+* ✅ React 19 + Vite
+* ✅ Express 5
+* ✅ MongoDB & Mongoose
+* ✅ JWT Authentication
+* ✅ Secure Cookie Sessions
+* ✅ Bcrypt Password Encryption
+* ✅ Nodemailer Email Integration
+* ✅ TanStack Query v5
+* ✅ React Hook Form
+* ✅ Kanban Task Management
+* ✅ Full CRUD Operations
+* ✅ Profile Management
+* ✅ Responsive Glassmorphism UI
+* ✅ Zero-Refresh Real-time Updates
 
 ---
 
 ## 📄 License
 
-This project is licensed under the **MIT License**.  
-Created as a technical assessment for Full-Stack Development.
+This project is licensed under the **MIT License**.
+
+Created as a **Full-Stack MERN Task & Profile Management System** showcasing modern web development practices, scalable architecture, secure authentication, and a responsive user experience.

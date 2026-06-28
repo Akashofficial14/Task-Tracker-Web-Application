@@ -9,14 +9,14 @@ const Register = ({ setToggle }) => {
     handleSubmit,
     reset,
     formState: { isSubmitting, errors },
-  } = useForm();
+  } = useForm({ mode: "onBlur" });
 
   const onSubmit = async (data) => {
     try {
       const response = await axiosInstance.post("/api/auth/register", data);
-      toast.success("Registration Successful! Please verify your email.");
       reset();
       setToggle(false);
+      toast.success("Registration Successful!.");
     } catch (err) {
       toast.error(err.response?.data?.message || "Registration failed");
     }
@@ -33,15 +33,27 @@ const Register = ({ setToggle }) => {
           Join us and start your journey
         </p>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-3" noValidate>
           {/* Full Name */}
           <div>
             <label className="block text-gray-700 mb-1 text-xs font-bold ml-1">
               FULL NAME
             </label>
             <input
-              {...register("name", { required: "Name is required" })}
-              className="w-full bg-gray-50 border border-gray-200 text-sm rounded-xl p-3 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all"
+              {...register("name", {
+                required: "Name is required",
+                minLength: {
+                  value: 2,
+                  message: "Name must be at least 2 characters",
+                },
+                pattern: {
+                  value: /^[A-Za-z\s]+$/,
+                  message: "Name can only contain letters and spaces",
+                },
+              })}
+              className={`w-full bg-gray-50 border ${
+                errors.name ? "border-red-400" : "border-gray-200"
+              } text-sm rounded-xl p-3 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all`}
               placeholder="Enter your full name"
             />
             {errors.name && (
@@ -59,20 +71,46 @@ const Register = ({ setToggle }) => {
               </label>
               <input
                 type="tel"
-                {...register("mobileNumber", { required: "Required" })}
-                className="w-full bg-gray-50 border border-gray-200 text-sm rounded-xl p-3 focus:border-blue-500 outline-none"
+                {...register("mobileNumber", {
+                  required: "Required",
+                  pattern: {
+                    value: /^[6-9]\d{9}$/,
+                    message: "Enter a valid 10-digit number",
+                  },
+                })}
+                className={`w-full bg-gray-50 border ${
+                  errors.mobileNumber ? "border-red-400" : "border-gray-200"
+                } text-sm rounded-xl p-3 focus:border-blue-500 outline-none`}
                 placeholder="Enter your mobile number"
               />
+              {errors.mobileNumber && (
+                <p className="text-red-500 text-[10px] mt-0.5 ml-1">
+                  {errors.mobileNumber.message}
+                </p>
+              )}
             </div>
             <div>
               <label className="block text-gray-700 mb-1 text-xs font-bold ml-1">
                 CITY
               </label>
               <input
-                {...register("city", { required: "Required" })}
-                className="w-full bg-gray-50 border border-gray-200 text-sm rounded-xl p-3 focus:border-blue-500 outline-none"
+                {...register("city", {
+                  required: "Required",
+                  minLength: {
+                    value: 2,
+                    message: "Too short",
+                  },
+                })}
+                className={`w-full bg-gray-50 border ${
+                  errors.city ? "border-red-400" : "border-gray-200"
+                } text-sm rounded-xl p-3 focus:border-blue-500 outline-none`}
                 placeholder="Enter your city"
               />
+              {errors.city && (
+                <p className="text-red-500 text-[10px] mt-0.5 ml-1">
+                  {errors.city.message}
+                </p>
+              )}
             </div>
           </div>
 
@@ -82,10 +120,23 @@ const Register = ({ setToggle }) => {
               EMAIL ADDRESS
             </label>
             <input
-              {...register("email", { required: "Email is required" })}
-              className="w-full bg-gray-50 border border-gray-200 text-sm rounded-xl p-3 focus:border-blue-500 outline-none"
+              {...register("email", {
+                required: "Email is required",
+                pattern: {
+                  value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                  message: "Enter a valid email address",
+                },
+              })}
+              className={`w-full bg-gray-50 border ${
+                errors.email ? "border-red-400" : "border-gray-200"
+              } text-sm rounded-xl p-3 focus:border-blue-500 outline-none`}
               placeholder="Enter your email"
             />
+            {errors.email && (
+              <p className="text-red-500 text-[10px] mt-0.5 ml-1">
+                {errors.email.message}
+              </p>
+            )}
           </div>
 
           {/* Password */}
@@ -97,11 +148,21 @@ const Register = ({ setToggle }) => {
               type="password"
               {...register("password", {
                 required: "Password is required",
-                minLength: 6,
+                minLength: {
+                  value: 6,
+                  message: "Password must be at least 6 characters",
+                },
               })}
-              className="w-full bg-gray-50 border border-gray-200 text-sm rounded-xl p-3 focus:border-blue-500 outline-none"
+              className={`w-full bg-gray-50 border ${
+                errors.password ? "border-red-400" : "border-gray-200"
+              } text-sm rounded-xl p-3 focus:border-blue-500 outline-none`}
               placeholder="Enter your password"
             />
+            {errors.password && (
+              <p className="text-red-500 text-[10px] mt-0.5 ml-1">
+                {errors.password.message}
+              </p>
+            )}
           </div>
 
           <button

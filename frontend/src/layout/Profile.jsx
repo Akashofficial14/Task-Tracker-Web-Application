@@ -12,7 +12,7 @@ import Display from "../components/home/Display";
 import EditProfile from "../components/home/EditProfile";
 import UpdatePass from "../components/home/UpdatePass";
 
-const Homelayout = () => {
+const Profile = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const [view, setView] = useState("display");
@@ -136,4 +136,4 @@ const Homelayout = () => {
   );
 };
 
-export default Homelayout;
+export default Profile;

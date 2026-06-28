@@ -26,7 +26,7 @@ const AuthLayout = () => {
           </div>
 
           <div className="relative z-10 text-center">
-            <h1 className="text-4xl font-bold mb-4">Welcome to Spacer</h1>
+            <h1 className="text-4xl font-bold mb-4">Welcome to Task Manager</h1>
             <div className="bg-white/20 p-5 rounded-full w-28 h-28 flex items-center justify-center mx-auto mb-6 backdrop-blur-md border border-white/30">
                <svg className="w-14 h-14 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" />

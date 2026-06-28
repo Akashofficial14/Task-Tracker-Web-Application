@@ -10,7 +10,7 @@ const Login = ({ setToggle }) => {
     handleSubmit,
     reset,
     formState: { isSubmitting, errors },
-  } = useForm();
+  } = useForm({ mode: "onBlur" });
   const navigate = useNavigate();
 
   const onSubmit = async (data) => {
@@ -41,7 +41,7 @@ const Login = ({ setToggle }) => {
           Login to access your account
         </p>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-5" noValidate>
           <div>
             <label className="block text-gray-700 mb-2 text-xs font-bold ml-1 uppercase">
               Email
@@ -49,9 +49,22 @@ const Login = ({ setToggle }) => {
             <input
               type="email"
               placeholder="Enter your email"
-              {...register("email", { required: "Email is required" })}
-              className="w-full bg-gray-50 border border-gray-200 text-gray-900 rounded-2xl p-4 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all placeholder:text-gray-400 text-sm"
+              {...register("email", {
+                required: "Email is required",
+                pattern: {
+                  value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                  message: "Enter a valid email address",
+                },
+              })}
+              className={`w-full bg-gray-50 border ${
+                errors.email ? "border-red-400" : "border-gray-200"
+              } text-gray-900 rounded-2xl p-4 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all placeholder:text-gray-400 text-sm`}
             />
+            {errors.email && (
+              <p className="text-red-500 text-[10px] mt-1 ml-1">
+                {errors.email.message}
+              </p>
+            )}
           </div>
 
           <div>
@@ -61,9 +74,22 @@ const Login = ({ setToggle }) => {
             <input
               type="password"
               placeholder="••••••••"
-              {...register("password", { required: "Password is required" })}
-              className="w-full bg-gray-50 border border-gray-200 text-gray-900 rounded-2xl p-4 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all placeholder:text-gray-400 text-sm"
+              {...register("password", {
+                required: "Password is required",
+                minLength: {
+                  value: 6,
+                  message: "Password must be at least 6 characters",
+                },
+              })}
+              className={`w-full bg-gray-50 border ${
+                errors.password ? "border-red-400" : "border-gray-200"
+              } text-gray-900 rounded-2xl p-4 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all placeholder:text-gray-400 text-sm`}
             />
+            {errors.password && (
+              <p className="text-red-500 text-[10px] mt-1 ml-1">
+                {errors.password.message}
+              </p>
+            )}
           </div>
 
           <button
